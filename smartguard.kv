@@ -1,0 +1,134 @@
+<LockScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        spacing: 15
+        Label:
+            text: 'SMART GUARD'
+            font_size: 28
+            bold: True
+            size_hint_y: None
+            height: 60
+        Label:
+            text: root.gps_text
+            font_size: 10
+            size_hint_y: None
+            height: 25
+        Label:
+            text: root.status_text
+            font_size: 16
+        TextInput:
+            id: pin_input
+            hint_text: 'Enter PIN (default 1234)'
+            password: True
+            multiline: False
+            size_hint_y: None
+            height: 50
+            font_size: 20
+        Button:
+            id: unlock_btn
+            text: 'UNLOCK'
+            size_hint_y: None
+            height: 60
+            on_press: root.check_pin()
+
+<DashboardScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+        Label:
+            text: 'Smart Guard Dashboard'
+            font_size: 20
+            bold: True
+            size_hint_y: None
+            height: 40
+        TabbedPanel:
+            do_default_tab: False
+            TabbedPanelItem:
+                text: 'Email Recovery'
+                BoxLayout:
+                    orientation: 'vertical'
+                    padding: 10
+                    spacing: 8
+                    TextInput:
+                        id: sender_input
+                        hint_text: 'Your Gmail (sender)'
+                        size_hint_y: None
+                        height: 40
+                    TextInput:
+                        id: app_pass_input
+                        hint_text: 'Gmail App Password'
+                        password: True
+                        size_hint_y: None
+                        height: 40
+                    TextInput:
+                        id: receiver_input
+                        hint_text: 'Receiver Email (Parent)'
+                        size_hint_y: None
+                        height: 40
+                    TextInput:
+                        id: sms_number_input
+                        hint_text: 'SMS Fallback Number e.g. 0881234567'
+                        size_hint_y: None
+                        height: 40
+                        input_filter: 'int'
+                    BoxLayout:
+                        size_hint_y: None
+                        height: 40
+                        Label:
+                            text: 'Email ON'
+                            font_size: 12
+                        Switch:
+                            id: email_switch
+                        Label:
+                            text: 'SMS ON'
+                            font_size: 12
+                        Switch:
+                            id: sms_switch
+                            active: True
+                    Label:
+                        id: gps_label
+                        text: 'GPS: Starting...'
+                        font_size: 9
+                        size_hint_y: None
+                        height: 50
+                        text_size: self.width, None
+                    BoxLayout:
+                        size_hint_y: None
+                        height: 50
+                        spacing: 10
+                        Button:
+                            text: 'SAVE ALL'
+                            on_press: root.save_all()
+                        Button:
+                            text: 'TEST EMAIL+SMS'
+                            on_press: root.test_all()
+                    Label:
+                        id: email_status_label
+                        text: root.email_status
+                        font_size: 11
+                        size_hint_y: None
+                        height: 30
+            TabbedPanelItem:
+                text: 'Logs'
+                BoxLayout:
+                    orientation: 'vertical'
+                    Label:
+                        id: photo_count
+                        text: 'Evidence: 0'
+                        size_hint_y: None
+                        height: 30
+                    ScrollView:
+                        Label:
+                            id: log_label
+                            text: 'No logs'
+                            font_size: 10
+                            text_size: self.width, None
+                            size_hint_y: None
+                            height: self.texture_size[1]
+        Button:
+            text: 'Lock Now'
+            size_hint_y: None
+            height: 50
+            on_press: root.manager.current = 'lock'
