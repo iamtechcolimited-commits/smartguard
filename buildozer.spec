@@ -1,21 +1,21 @@
-[app]
-title = Smart Guard
-package.name = smartguard
-package.domain = com.smartguard.app
-source.dir = .
-source.include_exts = py,kv,json
-version = 1.0
-requirements = python3,kivy,plyer,pyjnius
-orientation = portrait
-fullscreen = 0
-
-[app:android]
-android.permissions = CAMERA,ACCESS_FINE_LOCATION,ACCESS_COARSE_LOCATION,INTERNET,VIBRATE,SEND_SMS,RECEIVE_SMS
-android.api = 33
-android.minapi = 21
-android.ndk = 25b
-android.accept_sdk_license_agreement = True
-
-[buildozer]
-log_level = 2
-warn_on_root = 1
+name: Build APK
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev
+          pip install --upgrade pip
+          pip install buildozer cython==0.29.36
+      - name: Build APK
+        run: |
+          buildozer android debug
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: SmartGuard-APK
+          path: bin/*.apk
