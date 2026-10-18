@@ -8,8 +8,6 @@ source.include_exts = py,png,jpg,kv,atlas
 source.exclude_exts = spec
 
 version = 1.0
-version.regex = __version__ = ['"]([^'"]*)['"]
-version.filename = %(source.dir)s/main.py
 
 requirements = python3,kivy==2.3.1,plyer,pillow,androidstorage4kivy
 
@@ -18,7 +16,6 @@ orientation = portrait
 [buildozer]
 log_level = 2
 
-# Android specific
 [app:android]
 fullscreen = 0
 android.permissions = INTERNET,SEND_SMS,RECEIVE_SMS,READ_SMS,ACCESS_FINE_LOCATION,ACCESS_COARSE_LOCATION,ACCESS_BACKGROUND_LOCATION,READ_EXTERNAL_STORAGE,WRITE_EXTERNAL_STORAGE
